@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface ISidebarProps {}
 
@@ -45,9 +46,9 @@ export function Sidebar(props: ISidebarProps) {
 
       {user && (
         <div className="mt-auto">
-          <SidebarGroup label="Account">
+          <SidebarGroup label="Account" noMargin>
             <SidebarLink
-              href="/account"
+              href="/api/auth/account"
               icon={UserIcon}
               label={user.name ?? "Account"}
             />
@@ -68,11 +69,17 @@ export function Sidebar(props: ISidebarProps) {
 interface ISidebarGroupProps {
   label: string;
   children: ReactNode | ReactNode[];
+  noMargin?: boolean;
 }
 
 export function SidebarGroup(props: ISidebarGroupProps) {
   return (
-    <div className="flex flex-col gap-px w-full mb-4 pr-2">
+    <div
+      className={cn(
+        "flex flex-col gap-px w-full pr-2",
+        !props.noMargin && "mb-4",
+      )}
+    >
       <p className="px-4 text-sm text-gray-900 font-semibold mb-1">
         {props.label}
       </p>
