@@ -7,7 +7,7 @@ interface IAppShellProps {
 
 export function AppShell(props: IAppShellProps) {
   return (
-    <div className="w-screen h-screen overflow-hidden p-2 bg-green-50 flex flex-row">
+    <div className="w-screen h-screen overflow-hidden p-2 bg-gray-50 flex flex-row">
       <Sidebar />
       <div className="w-full h-full overflow-x-hidden overflow-y-auto bg-white rounded-md border border-gray-200 ">
         {props.children}
