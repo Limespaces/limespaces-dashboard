@@ -12,12 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useServerAction } from "@/hooks/useServerAction";
-import { WorkspaceResponseDto } from "@limespaces/shared";
+import { Dto_Workspace_Create } from "@limespaces/shared";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 interface ICreateWorkspaceFormProps {
-  createWorkspace: IServerActionDispatcher<FormData, WorkspaceResponseDto>;
+  createWorkspace: IServerActionDispatcher<FormData, Dto_Workspace_Create>;
 }
 
 export function CreateWorkspaceForm(props: ICreateWorkspaceFormProps) {

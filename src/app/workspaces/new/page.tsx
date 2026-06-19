@@ -2,20 +2,20 @@ import { API, ApiVersion } from "@/api/API";
 import { AppShell } from "@/components/app/appshell";
 import {
   WorkspaceCreateRequestDto,
-  WorkspaceResponseDto,
+  Dto_Workspace_Create,
 } from "@limespaces/shared";
 import { CreateWorkspaceForm } from "./client";
 import { createServerAction } from "@/api/actions";
 
 export default async function Page() {
-  const createWorkspace = createServerAction<FormData, WorkspaceResponseDto>(
+  const createWorkspace = createServerAction<FormData, Dto_Workspace_Create>(
     async (data, resolve) => {
       "use server";
 
       const name = data.get("name") as string;
 
       const response = await API.post<
-        WorkspaceResponseDto,
+        Dto_Workspace_Create,
         WorkspaceCreateRequestDto
       >(ApiVersion.v1, "/workspace", {
         name,

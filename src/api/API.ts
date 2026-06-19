@@ -36,8 +36,6 @@ export class API {
     path: string,
     throws: boolean = false,
   ): Promise<IApiResponse<ReturnType>> {
-    console.log(this.connector.defaults.baseURL);
-
     return await this.$call("get", version, path, null, throws);
   }
 
