@@ -2,8 +2,9 @@ import { auth } from "@/auth";
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
+  const hasRefreshError = req.auth?.error === "RefreshAccessTokenError";
 
-  if (!isLoggedIn && req.nextUrl.pathname !== "/auth/signin") {
+  if ((!isLoggedIn || hasRefreshError) && req.nextUrl.pathname !== "/auth/signin") {
     const loginUrl = new URL("/auth/signin", req.nextUrl.origin);
     loginUrl.searchParams.set("callbackUrl", req.nextUrl.href);
 

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans, Ubuntu_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
 
 const font_plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -12,6 +13,12 @@ const font_plusJakartaSans = Plus_Jakarta_Sans({
 const font_outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+});
+
+const font_ubuntuMono = Ubuntu_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -32,10 +39,12 @@ export default function RootLayout({
         "font-sans",
         font_plusJakartaSans.variable,
         font_outfit.variable,
+        font_ubuntuMono.variable,
       )}
     >
       <body className="min-h-full flex flex-col">
         <SessionProvider>{children}</SessionProvider>
+        <Toaster />
       </body>
     </html>
   );
