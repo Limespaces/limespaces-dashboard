@@ -5,10 +5,7 @@ export const WorkspaceContainerStateTranslation: {
 } = {
   [EWorkspaceContainerState.WaitingForCreation]: "Waiting for creation",
   [EWorkspaceContainerState.Creating]: "Creating",
-  [EWorkspaceContainerState.Starting]: "Starting",
-  [EWorkspaceContainerState.Running]: "Running",
-  [EWorkspaceContainerState.Stopping]: "Stopping",
-  [EWorkspaceContainerState.Stopped]: "Stopped",
+  [EWorkspaceContainerState.Created]: "Created",
   [EWorkspaceContainerState.Deleting]: "Deleting",
   [EWorkspaceContainerState.Deleted]: "Deleted",
 };

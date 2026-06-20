@@ -19,6 +19,7 @@ interface IPowerWorkspaceButtonProps {
   >;
   workspaceId: string;
   currentState?: EWorkspaceContainerState;
+  dockerContainerState?: string;
 }
 
 export function PowerWorkspaceButton(props: IPowerWorkspaceButtonProps) {
@@ -36,7 +37,9 @@ export function PowerWorkspaceButton(props: IPowerWorkspaceButtonProps) {
           dispatch({ workspaceId: props.workspaceId, action: "start" })
         }
         disabled={
-          isLoading || props.currentState != EWorkspaceContainerState.Stopped
+          isLoading ||
+          props.currentState != EWorkspaceContainerState.Created ||
+          !["exited", "created"].includes(props.dockerContainerState ?? "")
         }
         className="h-8 w-8"
       >
@@ -47,7 +50,11 @@ export function PowerWorkspaceButton(props: IPowerWorkspaceButtonProps) {
           dispatch({ workspaceId: props.workspaceId, action: "stop" })
         }
         disabled={
-          isLoading || props.currentState != EWorkspaceContainerState.Running
+          isLoading ||
+          props.currentState != EWorkspaceContainerState.Created ||
+          !["running", "dead", "starting"].includes(
+            props.dockerContainerState ?? "",
+          )
         }
         className="h-8 w-8"
       >

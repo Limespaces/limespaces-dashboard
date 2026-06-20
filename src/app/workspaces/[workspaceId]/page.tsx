@@ -8,6 +8,7 @@ import {
   EWorkspaceContainerState,
 } from "@limespaces/shared";
 import { WorkspaceContainerStateTranslation } from "@/lang/enum-translations";
+import Link from "next/link";
 
 interface IPageProps {
   params: Promise<{
@@ -61,14 +62,18 @@ export default async function Page(props: IPageProps) {
             ? WorkspaceContainerStateTranslation[
                 workspace.data.workspaceContainer.state
               ]
-            : "Unknown"}
+            : "Unknown"}{" "}
+          - {workspace.data.dockerContainerState}
         </p>
 
         <PowerWorkspaceButton
           powerWorkspace={powerWorkspace}
           workspaceId={workspaceId}
           currentState={workspace.data.workspaceContainer?.state}
+          dockerContainerState={workspace.data.dockerContainerState}
         />
+
+        <Link href={`/workspaces/${workspaceId}/remote`}>Open remote</Link>
       </div>
     </AppShell>
   );
