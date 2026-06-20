@@ -123,4 +123,13 @@ export class API {
   private static $path(version: ApiVersion, path: string): string {
     return `v${version}${path.startsWith("/") ? "" : "/"}${path}`;
   }
+
+  static getWsUrl(version: ApiVersion, path: string) {
+    const wsBase = DashboardConfig.addresses.orchestratorBaseUrl?.replace(
+      "http",
+      "ws",
+    );
+
+    return `${wsBase}${wsBase?.endsWith("/") ? "" : "/"}v${version}${path.startsWith("/") ? "" : "/"}${path}`;
+  }
 }
