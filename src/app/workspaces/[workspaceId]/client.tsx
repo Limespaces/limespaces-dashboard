@@ -75,6 +75,13 @@ export function Client(props: IClientProps) {
       <div className="w-100 aspect-video">
         <Vnc token={props.vncToken} readonly />
       </div>
+      <Button
+        onClick={() =>
+          API.post(ApiVersion.v1, `/workspace/${workspace.id}/supervisor`, {})
+        }
+      >
+        Test supervisor
+      </Button>
     </>
   );
 }
