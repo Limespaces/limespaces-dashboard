@@ -1,7 +1,7 @@
 import { API, ApiVersion } from "@/api/API";
 import { AppShell } from "@/components/app/appshell";
 import { ApiErrorScreen } from "@/components/screens/error";
-import { WorkspaceContainerStateTranslation } from "@/lang/enum-translations";
+import { translateWorkspaceState } from "@/lang/workspace";
 import { Dto_Workspace_GetAll } from "@limespaces/shared";
 import Link from "next/link";
 
@@ -22,17 +22,19 @@ export default async function Page() {
             <Link
               key={workspace.id}
               href={`/workspaces/${workspace.id}`}
-              className="w-full flex grow shadow-sm border border-gray-100 rounded-md p-4 flex flex-col gap-px group cursor-pointer hover:border-green-700 transition-colors duration-200"
+              className="w-full flex grow shadow-sm border border-gray-100 rounded-md p-4 flex-col gap-px group cursor-pointer hover:border-green-700 transition-colors duration-200"
             >
               <p className="group-hover:text-green-700 transition-colors duration-200">
                 {workspace.name}
               </p>
               <p className="text-xs text-gray-400">
-                {workspace.workspaceContainer
-                  ? WorkspaceContainerStateTranslation[
-                      workspace.workspaceContainer?.state
-                    ]
-                  : "Unknown"}
+                {
+                  // TODO: Add docker state?
+                  translateWorkspaceState(
+                    workspace.workspaceContainer?.state!,
+                    "",
+                  )
+                }
               </p>
             </Link>
           ))}

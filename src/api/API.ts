@@ -1,6 +1,7 @@
 import { DashboardConfig } from "@/config";
 import { auth } from "@/auth";
 import axios, { AxiosInstance } from "axios";
+import { EventSource } from "eventsource";
 
 export interface IApiErrorResponse {
   isOk: false;
@@ -74,6 +75,15 @@ export class API {
     return await this.$call("delete", version, path, null, throws);
   }
 
+  private static async getSession() {
+    if (typeof window !== "undefined") {
+      const { getSession } = await import("next-auth/react");
+      return await getSession();
+    }
+
+    return await auth();
+  }
+
   private static async $call<ReturnType, BodyType>(
     method: "get" | "post" | "put" | "patch" | "delete",
     version: ApiVersion,
@@ -81,7 +91,7 @@ export class API {
     body: BodyType,
     throws: boolean,
   ): Promise<IApiResponse<ReturnType>> {
-    const session = await auth();
+    const session = await this.getSession();
     const headers: Record<string, string> = {};
 
     if (session?.accessToken)
@@ -131,5 +141,27 @@ export class API {
     );
 
     return `${wsBase}${wsBase?.endsWith("/") ? "" : "/"}v${version}${path.startsWith("/") ? "" : "/"}${path}`;
+  }
+
+  static async SSE(version: ApiVersion, path: string) {
+    const baseUrl = DashboardConfig.addresses.orchestratorBaseUrl;
+
+    const session = await this.getSession();
+
+    const es = new EventSource(
+      `${baseUrl}${baseUrl?.endsWith("/") ? "" : "/"}v${version}${path.startsWith("/") ? "" : "/"}${path}`,
+      {
+        fetch: (input, init) =>
+          fetch(input, {
+            ...init,
+            headers: {
+              ...init.headers,
+              Authorization: `Bearer ${session?.accessToken}`,
+            },
+          }),
+      },
+    );
+
+    return es;
   }
 }

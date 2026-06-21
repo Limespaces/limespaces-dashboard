@@ -12,6 +12,7 @@ const VncScreen = dynamic(async () => (await import("react-vnc")).VncScreen, {
 
 interface IVncProps {
   token: string;
+  readonly?: boolean;
 }
 
 export function Vnc(props: IVncProps) {
@@ -41,11 +42,14 @@ export function Vnc(props: IVncProps) {
   return (
     <div
       ref={containerRef}
-      className="w-full h-full"
+      className="w-full h-full relative"
       onMouseDown={() => {
         vncRef.current?.focus();
       }}
     >
+      {props.readonly && (
+        <div className="absolute top-0 left-0 bg-transparent w-full h-full"></div>
+      )}
       <VncScreen
         ref={vncRef}
         url={API.getWsUrl(ApiVersion.v1, `/workspace-vnc?token=${props.token}`)}
@@ -56,6 +60,8 @@ export function Vnc(props: IVncProps) {
         }}
         scaleViewport
         focusOnClick
+        qualityLevel={props.readonly ? 0 : undefined}
+        viewOnly={props.readonly}
         style={{
           width: "100%",
           height: "100%",

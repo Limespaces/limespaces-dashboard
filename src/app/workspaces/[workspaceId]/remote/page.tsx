@@ -1,11 +1,11 @@
 import { API, ApiVersion } from "@/api/API";
 import { AppShell } from "@/components/app/appshell";
 import { ApiErrorScreen } from "@/components/screens/error";
+import { Vnc } from "@/components/Vnc";
 import {
   Dto_Workspace_Get,
   Dto_Workspace_Vnc_CreateToken,
 } from "@limespaces/shared";
-import { Vnc } from "./client";
 
 interface IPageProps {
   params: Promise<{
