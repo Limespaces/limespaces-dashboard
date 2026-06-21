@@ -21,8 +21,6 @@ const font_ubuntuMono = Ubuntu_Mono({
   weight: "400",
 });
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Limespaces",
 };
@@ -45,13 +43,6 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.NEXT_PUBLIC_ORCHESTRATOR_URL = ${JSON.stringify(
-              process.env["NEXT_PUBLIC_ORCHESTRATOR_URL"] || "",
-            )};`,
-          }}
-        />
         <SessionProvider>{children}</SessionProvider>
         <Toaster />
       </body>

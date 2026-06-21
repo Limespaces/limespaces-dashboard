@@ -24,22 +24,13 @@ export enum ApiVersion {
 }
 
 export class API {
-  private static _connector?: AxiosInstance;
-  private static get connector(): AxiosInstance {
-    if (!this._connector) {
-      this._connector = axios.create({
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-    }
-
-    this._connector.defaults.baseURL =
-      DashboardConfig.addresses.orchestratorBaseUrl;
-
-    return this._connector;
-  }
+  private static connector: AxiosInstance = axios.create({
+    baseURL: DashboardConfig.addresses.orchestratorBaseUrl,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
 
   public static async get<ReturnType>(
     version: ApiVersion,
